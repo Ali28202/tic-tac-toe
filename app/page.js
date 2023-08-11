@@ -4,7 +4,7 @@ function Box({ value, onClick }) {
 	return (
 		<>
 			<button
-				className="border-2 border-solid border-black w-14 h-14 text-center text-3xl font-bold transition-all hover:bg-rose-400"
+				className="border-2 border-solid border-black w-14 h-14 text-center text-3xl font-bold transition-all hover:bg-rose-400 text-cyan-800"
 				onClick={onClick}
 			>
 				{value}
@@ -52,24 +52,38 @@ export default function Board() {
 	}
 	function Modal() {
 		let winner = checkWinner();
+		let isEnded = squares.every((square) => {
+			return square != null;
+		});
 		if (!winner) {
 			let check;
 			xIsNext == true ? (check = "X") : (check = "O");
+			if (isEnded) {
+				return (
+					<>
+						<h1 className="text-center m-3 text-xl">Tie</h1>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<h1 className="text-center m-3 text-xl">
+							Next Player is : {check}
+						</h1>
+					</>
+				);
+			}
+		} else {
 			return (
 				<>
-					<h1 className="text-center m-3 text-xl">Next Player is : {check}</h1>
+					<h1 className="text-center m-3 text-xl">Winner : {winner}</h1>
 				</>
 			);
 		}
-		return (
-			<>
-				<h1 className="text-center m-3 text-xl">Winner : {winner}</h1>
-			</>
-		);
 	}
 	return (
 		<>
-			<div className="my-64">
+			<div className="my-48">
 				<Modal />
 				<div className="flex align-center justify-center">
 					<Box value={squares[0]} onClick={() => handleClick(0)} />
