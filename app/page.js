@@ -4,7 +4,7 @@ function Box({ value, onClick }) {
 	return (
 		<>
 			<button
-				className="border-2 border-solid border-black w-14 h-14 text-center text-3xl font-bold"
+				className="border-2 border-solid border-black w-14 h-14 text-center text-3xl font-bold transition-all hover:bg-rose-400"
 				onClick={onClick}
 			>
 				{value}
@@ -53,7 +53,13 @@ export default function Board() {
 	function Modal() {
 		let winner = checkWinner();
 		if (!winner) {
-			return;
+			let check;
+			xIsNext == true ? (check = "X") : (check = "O");
+			return (
+				<>
+					<h1 className="text-center m-3 text-xl">Next Player is : {check}</h1>
+				</>
+			);
 		}
 		return (
 			<>
@@ -61,22 +67,9 @@ export default function Board() {
 			</>
 		);
 	}
-	function NextPlayerModal() {
-		if (checkWinner()) {
-			return;
-		}
-		let check;
-		xIsNext == true ? (check = "X") : (check = "O");
-		return (
-			<>
-				<h1 className="text-center m-3 text-xl">Next Player is : {check}</h1>
-			</>
-		);
-	}
 	return (
 		<>
 			<div className="my-64">
-				<NextPlayerModal />
 				<Modal />
 				<div className="flex align-center justify-center">
 					<Box value={squares[0]} onClick={() => handleClick(0)} />
@@ -93,6 +86,12 @@ export default function Board() {
 					<Box value={squares[7]} onClick={() => handleClick(7)} />
 					<Box value={squares[8]} onClick={() => handleClick(8)} />
 				</div>
+				<button
+					className="m-auto my-10 block border-2 border-black p-2 rounded hover:bg-rose-400 transition-all hover:scale-90"
+					onClick={() => location.reload()}
+				>
+					Restart Game
+				</button>
 			</div>
 		</>
 	);
